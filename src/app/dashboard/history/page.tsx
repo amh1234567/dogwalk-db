@@ -39,7 +39,7 @@ export default async function HistoryPage() {
         </div>
 
         {/* 統計情報 */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           <div className="bg-white rounded-lg shadow p-6">
             <h3 className="text-sm font-medium text-gray-500">総散歩回数</h3>
             <p className="text-2xl font-bold text-gray-900">{walkRecords.length}</p>
@@ -48,12 +48,6 @@ export default async function HistoryPage() {
             <h3 className="text-sm font-medium text-gray-500">総散歩時間</h3>
             <p className="text-2xl font-bold text-gray-900">
               {walkRecords.reduce((total, record) => total + record.duration_minutes, 0)}分
-            </p>
-          </div>
-          <div className="bg-white rounded-lg shadow p-6">
-            <h3 className="text-sm font-medium text-gray-500">総距離</h3>
-            <p className="text-2xl font-bold text-gray-900">
-              {walkRecords.reduce((total, record) => total + (record.distance_km || 0), 0).toFixed(1)}km
             </p>
           </div>
         </div>
@@ -88,25 +82,27 @@ export default async function HistoryPage() {
                     <div className="flex-1">
                       <div className="flex items-center space-x-4">
                         <h3 className="text-lg font-medium text-gray-900">
-                          {record.dog_name}
+                          散歩記録
                         </h3>
-                        <span className="text-sm text-gray-500">
-                          {new Date(record.walk_date).toLocaleDateString('ja-JP')}
-                        </span>
-                        {record.weather && (
-                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                            {record.weather}
+                        {record.created_at && (
+                          <span className="text-sm text-gray-500">
+                            {new Date(record.created_at).toLocaleDateString('ja-JP', {
+                              year: 'numeric',
+                              month: 'long',
+                              day: 'numeric',
+                              hour: '2-digit',
+                              minute: '2-digit'
+                            })}
                           </span>
                         )}
                       </div>
                       <div className="mt-2 flex items-center space-x-6 text-sm text-gray-500">
                         <span>時間: {record.duration_minutes}分</span>
-                        {record.distance_km && (
-                          <span>距離: {record.distance_km}km</span>
-                        )}
                       </div>
-                      {record.notes && (
-                        <p className="mt-2 text-sm text-gray-600">{record.notes}</p>
+                      {record.course_name && (
+                        <p className="mt-2 text-sm text-gray-700 font-medium">
+                          {record.course_name}
+                        </p>
                       )}
                     </div>
                     <div className="flex items-center space-x-2">

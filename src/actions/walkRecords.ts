@@ -7,32 +7,21 @@ import { redirect } from 'next/navigation'
 // 散歩記録の型定義
 export interface WalkRecord {
   id?: string
-  dog_name?: string
-  walk_date: string
-  duration_minutes: number
-  course: string
-  distance_km?: number
-  notes?: string
-  weather?: string
   created_at?: string
-  updated_at?: string
+  duration_minutes: number
+  course_name: string
 }
 
 // 散歩記録を作成
 export async function createWalkRecord(formData: FormData) {
-  const walkRecord: Omit<WalkRecord, 'id' | 'created_at' | 'updated_at'> = {
-    dog_name: formData.get('dog_name') as string || undefined,
-    walk_date: formData.get('walk_date') as string,
+  const walkRecord: Omit<WalkRecord, 'id' | 'created_at'> = {
     duration_minutes: Number(formData.get('duration_minutes')),
-    course: formData.get('course') as string,
-    distance_km: formData.get('distance_km') ? Number(formData.get('distance_km')) : undefined,
-    notes: formData.get('notes') as string || undefined,
-    weather: formData.get('weather') as string || undefined,
+    course_name: formData.get('course') as string,
   }
 
   try {
     const { data, error } = await supabase
-      .from('walk_records')
+      .from('dogwalk_table')
       .insert([walkRecord])
       .select()
       .single()
@@ -55,9 +44,9 @@ export async function createWalkRecord(formData: FormData) {
 export async function getWalkRecords() {
   try {
     const { data, error } = await supabase
-      .from('walk_records')
+      .from('dogwalk_table')
       .select('*')
-      .order('walk_date', { ascending: false })
+      .order('created_at', { ascending: false })
 
     if (error) {
       throw new Error(`散歩記録の取得に失敗しました: ${error.message}`)
@@ -75,18 +64,13 @@ export async function getWalkRecords() {
 // 散歩記録を更新
 export async function updateWalkRecord(id: string, formData: FormData) {
   const updates: Partial<WalkRecord> = {
-    dog_name: formData.get('dog_name') as string || undefined,
-    walk_date: formData.get('walk_date') as string,
     duration_minutes: Number(formData.get('duration_minutes')),
-    course: formData.get('course') as string,
-    distance_km: formData.get('distance_km') ? Number(formData.get('distance_km')) : undefined,
-    notes: formData.get('notes') as string || undefined,
-    weather: formData.get('weather') as string || undefined,
+    course_name: formData.get('course') as string,
   }
 
   try {
     const { data, error } = await supabase
-      .from('walk_records')
+      .from('dogwalk_table')
       .update(updates)
       .eq('id', id)
       .select()
@@ -110,7 +94,7 @@ export async function updateWalkRecord(id: string, formData: FormData) {
 export async function deleteWalkRecord(id: string) {
   try {
     const { error } = await supabase
-      .from('walk_records')
+      .from('dogwalk_table')
       .delete()
       .eq('id', id)
 
@@ -128,14 +112,13 @@ export async function deleteWalkRecord(id: string) {
   }
 }
 
-// 特定の犬の散歩記録を取得
+// 特定の散歩記録を取得
 export async function getWalkRecordsByDog(dogName: string) {
   try {
     const { data, error } = await supabase
-      .from('walk_records')
+      .from('dogwalk_table')
       .select('*')
-      .eq('dog_name', dogName)
-      .order('walk_date', { ascending: false })
+      .order('created_at', { ascending: false })
 
     if (error) {
       throw new Error(`散歩記録の取得に失敗しました: ${error.message}`)

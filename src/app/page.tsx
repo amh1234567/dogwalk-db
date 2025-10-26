@@ -49,50 +49,9 @@ export default function Home() {
                 id="course"
                 name="course"
                 required
-                rows={3}
+                rows={4}
                 className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg resize-none"
                 placeholder="例: 公園を1周 → 川沿いを歩く"
-              />
-            </div>
-
-            {/* 犬の名前（オプション） */}
-            <div>
-              <label htmlFor="dog_name" className="block text-sm font-medium text-gray-700 mb-2">
-                犬の名前
-              </label>
-              <input
-                type="text"
-                id="dog_name"
-                name="dog_name"
-                className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                placeholder="例: ポチ"
-              />
-            </div>
-
-            {/* 散歩日時 */}
-            <div>
-              <label htmlFor="walk_date" className="block text-sm font-medium text-gray-700 mb-2">
-                散歩日時
-              </label>
-              <input
-                type="datetime-local"
-                id="walk_date"
-                name="walk_date"
-                className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              />
-            </div>
-
-            {/* メモ（オプション） */}
-            <div>
-              <label htmlFor="notes" className="block text-sm font-medium text-gray-700 mb-2">
-                メモ
-              </label>
-              <textarea
-                id="notes"
-                name="notes"
-                rows={3}
-                className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none"
-                placeholder="散歩の様子や気づいたことなどを記録..."
               />
             </div>
 
@@ -114,7 +73,6 @@ export default function Home() {
           <ul className="text-sm text-blue-700 space-y-1">
             <li>• 散歩時間は実際に歩いた時間を記録しましょう</li>
             <li>• コースには具体的なルートを記入すると後で振り返りやすくなります</li>
-            <li>• メモに犬の様子や気づいたことを書いておくと便利です</li>
           </ul>
         </div>
       </div>
