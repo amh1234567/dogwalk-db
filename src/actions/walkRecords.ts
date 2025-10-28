@@ -101,15 +101,13 @@ export async function deleteWalkRecord(id: string) {
     if (error) {
       throw new Error(`散歩記録の削除に失敗しました: ${error.message}`)
     }
-
-    revalidatePath('/')
-    return { success: true }
   } catch (error) {
-    return { 
-      success: false, 
-      error: error instanceof Error ? error.message : '不明なエラーが発生しました' 
-    }
+    console.error('散歩記録の削除エラー:', error)
+    throw new Error(error instanceof Error ? error.message : '不明なエラーが発生しました')
   }
+
+  revalidatePath('/')
+  redirect('/')
 }
 
 // 特定の散歩記録を取得
