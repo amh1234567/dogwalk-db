@@ -29,15 +29,15 @@ export async function createWalkRecord(formData: FormData) {
     if (error) {
       throw new Error(`散歩記録の作成に失敗しました: ${error.message}`)
     }
-
-    revalidatePath('/')
-    redirect('/')
   } catch (error) {
     console.error('散歩記録の作成エラー:', error)
     // エラーが発生した場合は、エラーページにリダイレクトするか、
     // エラー状態を管理する必要があります
     throw new Error(error instanceof Error ? error.message : '不明なエラーが発生しました')
   }
+
+  revalidatePath('/')
+  redirect('/')
 }
 
 // 散歩記録を取得
